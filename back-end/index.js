@@ -19,13 +19,43 @@ app.use(express.json())
 
 // END POINTS
 
-app.get('/', (request, response) => {
-  response.send('<h1> Hello world!</h1>')
+//end point 2
+app.get('/get_songs', async (request, response) => {
+  
+  //front end will send you the string "happy"
+  const mood = request.body // user input
 
-})
+  /**
+   * request.body from front-end is going to be 
+   * {
+   *  "mood": "happy"
+   * }
+   * 
+   * "happy" <--
+   */
 
+    //put code here
+   
+    try{
 
+      //put code here
+      //repeat this?
+        const songList = db.collection('moods').doc('happy');
+        const doc = await songList.get();
+        if (!doc.exists) {
+          console.log('No such document!');
+        } else {
+          console.log('Document data:', doc.data());
+        }
+      
+    }
+    catch(error){
+    console.log(error)
+  }
 
+  response.send(`<h1>completed</h1>`)
+
+}) 
 
 const unknownEndpoint = (request, response) => {
     response.status(400).send({error: 'unknown endpoint'})
